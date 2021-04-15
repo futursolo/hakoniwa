@@ -129,7 +129,7 @@ class MagicHttpRequest(requests.ReadableRequest):
         return self._reader
 
     def detach_reader(self) -> magichttp.HttpRequestReader:
-        raise NotImplementedError
+        raise NotImplementedError("Not Implemented Yet.")
 
 
 class MagicHttpResponse(responses.WritableResponse):

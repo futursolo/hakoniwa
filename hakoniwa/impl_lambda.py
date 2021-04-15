@@ -15,6 +15,8 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
+"""This Implements AWS Lambda support for hakoniwa."""
+
 from typing import Any, Dict, List, Mapping, Optional, Tuple
 import asyncio
 import base64
@@ -26,7 +28,10 @@ from .utils import lazy_property
 
 
 class LambdaRequest(requests.Request):
+    """Request for AWS Lambda."""
+
     def __init__(self, event: Dict[str, Any]) -> None:
+        """Initialise LambdaRequest."""
         self._event = event
 
         if event["isBase64Encoded"]:
@@ -71,22 +76,27 @@ class LambdaRequest(requests.Request):
 
     @property
     def method(self) -> constants.HttpRequestMethod:
+        """Return the request method."""
         return self._method
 
     @property
     def version(self) -> constants.HttpVersion:
+        """Return the request version."""
         return self._version
 
     @property
     def uri(self) -> str:
+        """Return the request URI."""
         return self._uri
 
     @lazy_property
     def queries(self) -> magicdict.FrozenTolerantMagicDict[str, str]:
+        """Return the parsed queries."""
         return self._queries
 
     @property
     def authority(self) -> str:
+        """Return the authority of the request."""
         if self._authority is None:
             raise AttributeError("Authority is not available.")
 
@@ -94,6 +104,7 @@ class LambdaRequest(requests.Request):
 
     @property
     def scheme(self) -> constants.HttpScheme:
+        """Return the scheme of the request."""
         if self._scheme is None:
             raise AttributeError("Scheme is not available.")
 
@@ -101,13 +112,23 @@ class LambdaRequest(requests.Request):
 
     @property
     def headers(self) -> magicdict.FrozenTolerantMagicDict[str, str]:
+        """Return the headers of the request."""
         return self._headers
 
     @property
     def body(self) -> bytes:
+        """Return the body of the request."""
         return self._body
 
     async def read(self) -> bytes:
+        """
+        Read the body of the request.
+
+        .. note:
+
+           This has no effect on LambdaRequest and returns the body
+           immediately.
+        """
         return self.body
 
     async def write_response(
@@ -116,6 +137,7 @@ class LambdaRequest(requests.Request):
         *,
         headers: Optional[Mapping[str, str]] = None,
     ) -> "LambdaResponse":
+        """Send the response."""
         if self._res_fur.done():
             raise exceptions.HttpError(
                 500, "You can only write response once."
@@ -139,6 +161,8 @@ class LambdaRequest(requests.Request):
 
 
 class LambdaResponse(responses.Response):
+    """Request for AWS Lambda."""
+
     def __init__(
         self,
         request: LambdaRequest,
@@ -146,6 +170,7 @@ class LambdaResponse(responses.Response):
         status_code: constants.HttpStatusCode,
         headers: magicdict.FrozenTolerantMagicDict[str, str],
     ) -> None:
+        """Initialise LambdaResponse."""
         self._request = request
         self._status_code = status_code
         self._headers = headers
@@ -155,45 +180,54 @@ class LambdaResponse(responses.Response):
 
     @property
     def request(self) -> LambdaRequest:
+        """Return the correspoding request."""
         return self._request
 
     @property
     def status_code(self) -> constants.HttpStatusCode:
+        """Return the status code of the response."""
         return self._status_code
 
     @property
     def version(self) -> constants.HttpVersion:
+        """Return the http version of the response."""
         return self._request.version
 
     @property
     def headers(self) -> magicdict.FrozenTolerantMagicDict[str, str]:
+        """Return the headers of the response."""
         return self._headers
 
     async def write(self, data: bytes) -> None:
+        """Write a chunk of response body."""
         if data:
             self._body_chunks.append(data)
 
     async def finish(self) -> None:
+        """Finish the response."""
         self._finished.set()
 
     def finished(self) -> bool:
+        """Return :code:`True` if the response is finished."""
         return self._finished.is_set()
 
     async def wait_finished(self) -> None:
+        """Wait until the response finishes."""
         await self._finished.wait()
 
     def translate(self) -> Dict[str, Any]:
+        """Translate the LambdaResponse object to AWS Lambda Response."""
         assert self.finished(), "This response is not finished."
 
         header_lists: Dict[str, List[str]] = {}
-        for k, v in self.headers.items():
-            if k in ("content-length",):
+        for (header_name, header_val) in self.headers.items():
+            if header_name in ("content-length",):
                 continue
 
-            if k not in header_lists.keys():
-                header_lists[k] = []
+            if header_name not in header_lists.keys():
+                header_lists[header_name] = []
 
-            header_lists[k].append(v)
+            header_lists[header_name].append(header_val)
 
         body_bytes = b"".join(self._body_chunks)
 
