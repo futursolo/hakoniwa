@@ -17,6 +17,7 @@
 
 from typing import (
     Any,
+    AnyStr,
     Awaitable,
     Callable,
     Dict,
@@ -29,6 +30,7 @@ import asyncio
 import asyncio.base_events
 import concurrent.futures
 import datetime
+import os
 import ssl
 
 import destination
@@ -148,23 +150,12 @@ class Application:
         return response.translate()
 
     def make_server(self) -> Callable[[], asyncio.Protocol]:
+        """Make an asyncio server factory."""
         return lambda: impl_magichttp.MagichttpServerProtocol(self)
 
-    def listen(
-        self,
-        port: int,
-        address: str = "localhost",
-        tls_ctx: Optional[Union[bool, ssl.SSLContext]] = None,
-        start_serving: bool = True,
-    ) -> Awaitable[asyncio.events.AbstractServer]:
-        """
-        Make a server and listen to the specified port and address.
-
-        :arg port: port number to bind
-        :arg address: ip address or hostname to bind
-        :arg tls_ctx: TLS Context or True for default tls context None or False
-        to disable tls
-        """
+    def _ensure_tls_context(
+        self, tls_ctx: Optional[Union[bool, ssl.SSLContext]] = None
+    ) -> Optional[ssl.SSLContext]:
         if tls_ctx:
             if isinstance(tls_ctx, bool):
                 _context: Optional[
@@ -177,13 +168,60 @@ class Application:
         else:
             _context = None
 
+        return _context
+
+    def listen(
+        self,
+        port: int,
+        address: str = "localhost",
+        *,
+        tls_ctx: Optional[Union[bool, ssl.SSLContext]] = None,
+        start_serving: bool = True,
+    ) -> Awaitable[asyncio.events.AbstractServer]:
+        """
+        Make a server and listen to the specified port and address.
+
+        :arg port: port number to bind
+        :arg address: ip address or hostname to bind
+        :arg tls_ctx: TLS Context or True for default tls context None or False
+            to disable tls
+        :arg start_serviing: Defines whether to start serving by default.
+            See asyncio's documentation for more details.
+        """
         loop = asyncio.get_event_loop()
 
         coro = loop.create_server(
             self.make_server(),
             address,
             port,
-            ssl=_context,
+            ssl=self._ensure_tls_context(tls_ctx),
+            start_serving=start_serving,
+        )
+
+        return loop.create_task(coro)
+
+    def listen_unix(
+        self,
+        path: os.PathLike[AnyStr],
+        *,
+        tls_ctx: Optional[Union[bool, ssl.SSLContext]] = None,
+        start_serving: bool = True,
+    ) -> Awaitable[asyncio.events.AbstractServer]:
+        """
+        Make a server and listens to a specific UNIX domain socket.
+
+        :arg path: the path to bind
+        :arg tls_ctx: TLS Context or True for default tls context None or False
+            to disable tls
+        :arg start_serviing: Defines whether to start serving by default.
+            See asyncio's documentation for more details.
+        """
+        loop = asyncio.get_event_loop()
+
+        coro = loop.create_unix_server(
+            self.make_server(),
+            path=path,  # type: ignore
+            ssl=self._ensure_tls_context(tls_ctx),
             start_serving=start_serving,
         )
 
