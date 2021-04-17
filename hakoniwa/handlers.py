@@ -1069,9 +1069,12 @@ class RequestHandler(BaseRequestHandler):
 
     This handler reads common request body of an http message in a common way.
 
-    It will respond an `HTTP 400: Bad Request` if it receives a request that
-    cannot be understood.
+    It will respond an `HTTP 400: Bad Request` if it receives a request body
+    that cannot be understood.
     """
+
+    # Maximum Content Length for Request Body, Default: 10 MB.
+    _MAX_CONTENT_LENGTH = 10 * 1024 * 1024
 
     def __init__(
         self,
@@ -1194,6 +1197,8 @@ class RequestHandler(BaseRequestHandler):
             constants.HttpRequestMethod.OPTIONS,
             constants.HttpRequestMethod.HEAD,
         ):
+            # There's no body in those methods, simply read until EOF and
+            # discard.
             with contextlib.suppress(EOFError):
                 await self.request.read()
 
@@ -1202,13 +1207,52 @@ class RequestHandler(BaseRequestHandler):
 
             return
 
+        # Check Content-Length
+        try:
+            content_length_str = self.get_header("content-length", "").strip()
+
+            if content_length_str:
+                content_length = int(content_length_str)
+
+                if content_length > self._MAX_CONTENT_LENGTH:
+                    raise exceptions.HttpError(
+                        constants.HttpStatusCode.REQUEST_ENTITY_TOO_LARGE
+                    )
+
+        except ValueError as e:
+            raise exceptions.HttpError(
+                constants.HttpStatusCode.BAD_REQUEST,
+                "Content-Type MUST be an integer.",
+            ) from e
+
+        async def read_body() -> bytearray:
+            buf = bytearray()
+
+            if isinstance(self.request, requests.ReadableRequest):
+                while len(buf) < self._MAX_CONTENT_LENGTH:
+                    try:
+                        buf += await self.request.reader.read(1024 * 1024)
+
+                    except EOFError:
+                        break
+
+            else:
+                buf += await self.request.read()
+
+            if len(buf) > self._MAX_CONTENT_LENGTH:
+                raise exceptions.HttpError(
+                    constants.HttpStatusCode.REQUEST_ENTITY_TOO_LARGE
+                )
+
+            return buf
+
         content_type = self.get_header("content-type", "")
 
         if content_type in (
             "application/x-www-form-urlencoded",
             "application/x-url-encoded",
         ):
-            body_bytes = await self.request.read()
+            body_bytes = await read_body()
             self._body_args = magicdict.FrozenTolerantMagicDict(
                 urllib.parse.parse_qsl(body_bytes.decode("utf-8"))
             )
@@ -1221,7 +1265,7 @@ class RequestHandler(BaseRequestHandler):
             )
 
         elif content_type == "application/json":  # noqa: SIM106
-            body = await self.request.read()
+            body = await read_body()
 
             try:
                 body_str = body.decode("utf-8")

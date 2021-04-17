@@ -33,3 +33,5 @@ func
 Awaitable
 impl
 b64
+coro
+EOF

@@ -35,9 +35,20 @@ import destination
 import sketchbook
 
 # from . import responses
-from . import constants, exceptions, handlers, impl_lambda, requests, security
+from . import (
+    constants,
+    exceptions,
+    handlers,
+    impl_lambda,
+    impl_magichttp,
+    requests,
+    security,
+)
 
 __all__ = ["Application"]
+
+
+_DELTA_30_DAYS: datetime.timedelta = datetime.timedelta(days=30)
 
 
 class Application:
@@ -59,9 +70,7 @@ class Application:
         security_secret: Optional[
             Union[str, bytes, security.BaseSecurityContext]
         ] = None,
-        secure_cookie_max_age: datetime.timedelta = datetime.timedelta(
-            days=30
-        ),
+        secure_cookie_max_age: datetime.timedelta = _DELTA_30_DAYS,
         safe_cookies: bool = True,
     ) -> None:
         self.handlers: destination.Dispatcher[
@@ -139,14 +148,15 @@ class Application:
         return response.translate()
 
     def make_server(self) -> Callable[[], asyncio.Protocol]:
-        raise NotImplementedError
+        return lambda: impl_magichttp.MagichttpServerProtocol(self)
 
     def listen(
         self,
         port: int,
         address: str = "localhost",
         tls_ctx: Optional[Union[bool, ssl.SSLContext]] = None,
-    ) -> Awaitable[asyncio.base_events.Server]:
+        start_serving: bool = True,
+    ) -> Awaitable[asyncio.events.AbstractServer]:
         """
         Make a server and listen to the specified port and address.
 
@@ -169,6 +179,12 @@ class Application:
 
         loop = asyncio.get_event_loop()
 
-        f = loop.create_server(self.make_server(), address, port, ssl=_context)
+        coro = loop.create_server(
+            self.make_server(),
+            address,
+            port,
+            ssl=_context,
+            start_serving=start_serving,
+        )
 
-        return loop.create_task(f)  # type: ignore
+        return loop.create_task(coro)
