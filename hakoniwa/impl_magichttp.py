@@ -37,6 +37,8 @@ class MagichttpServerProtocol(magichttp.HttpServerProtocol):
         self._app = __app
         self._loop = asyncio.get_event_loop()
 
+        super().__init__()
+
     async def _read_forever(self) -> None:
         tasks: "weakref.WeakSet[asyncio.Task[None]]" = weakref.WeakSet()
         try:
@@ -51,7 +53,10 @@ class MagichttpServerProtocol(magichttp.HttpServerProtocol):
             raise
 
         finally:
-            await asyncio.wait(list(tasks), return_when=asyncio.ALL_COMPLETED)
+            if tasks:
+                await asyncio.wait(
+                    list(tasks), return_when=asyncio.ALL_COMPLETED
+                )
 
     def connection_made(  # type: ignore
         self, transport: asyncio.Transport
