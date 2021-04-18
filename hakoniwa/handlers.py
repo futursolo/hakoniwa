@@ -156,9 +156,11 @@ def with_methods(
     """
 
     def decorator(cls: _THandler) -> _THandler:
-        @functools.wraps(cls)
         class Wrapper(cls):  # type: ignore
             _ALLOWED_METHODS = [constants.HttpRequestMethod(i) for i in args]
+
+        Wrapper.__name__ = cls.__name__
+        Wrapper.__doc__ = cls.__doc__
 
         return typing.cast(_THandler, Wrapper)
 

@@ -31,6 +31,7 @@ import asyncio.base_events
 import concurrent.futures
 import datetime
 import os
+import socket
 import ssl
 
 import destination
@@ -216,6 +217,11 @@ class Application:
         :arg start_serviing: Defines whether to start serving by default.
             See asyncio's documentation for more details.
         """
+        if not hasattr(socket, "AF_UNIX"):
+            raise NotImplementedError(
+                "Your platform does not support unix socket."
+            )
+
         loop = asyncio.get_event_loop()
 
         coro = loop.create_unix_server(
