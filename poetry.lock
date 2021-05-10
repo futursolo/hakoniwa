@@ -71,7 +71,7 @@ test = ["pytest (>=6.0.1,<7)"]
 
 [[package]]
 name = "flake8"
-version = "3.9.1"
+version = "3.9.2"
 description = "the modular source code checker: pep8 pyflakes and co"
 category = "dev"
 optional = false
@@ -420,7 +420,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "0b6f88114295fe4ede8ee9a944bacc7db75fd9e143b586ada142a9fe6341b49b"
+content-hash = "eaebffc0fd7718f0f7ebd7ba0496cce139aa7a23541af79fe94aa18f337ea912"
 
 [metadata.files]
 appdirs = [
@@ -448,8 +448,8 @@ destination = [
     {file = "destination-1.2.1.tar.gz", hash = "sha256:dc9a8299eccd4732001e588d9345ea718877ff331b2ae80a98fbf6bfe0d839b5"},
 ]
 flake8 = [
-    {file = "flake8-3.9.1-py2.py3-none-any.whl", hash = "sha256:3b9f848952dddccf635be78098ca75010f073bfe14d2c6bda867154bea728d2a"},
-    {file = "flake8-3.9.1.tar.gz", hash = "sha256:1aa8990be1e689d96c745c5682b687ea49f2e05a443aff1f8251092b0014e378"},
+    {file = "flake8-3.9.2-py2.py3-none-any.whl", hash = "sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907"},
+    {file = "flake8-3.9.2.tar.gz", hash = "sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b"},
 ]
 flake8-2020 = [
     {file = "flake8_2020-1.6.0-py2.py3-none-any.whl", hash = "sha256:e464cef7889117e7ae7253e35fcb8272bd8ae68fc10bb3399ef85b036c092528"},
