@@ -203,7 +203,7 @@ class Application:
 
     def listen_unix(
         self,
-        path: os.PathLike[AnyStr],
+        path: "os.PathLike[AnyStr]",
         *,
         tls_ctx: Optional[Union[bool, ssl.SSLContext]] = None,
         start_serving: bool = True,
