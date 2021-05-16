@@ -6,7 +6,7 @@ authors = ["Kaede Hoshikawa <futursolo@icloud.com>"]
 license = "Apache-2.0"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 
 # Dictionary
 magicdict = "^1.0.6"
