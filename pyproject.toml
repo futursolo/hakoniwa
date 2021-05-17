@@ -25,7 +25,7 @@ destination = "^1.2.1"
 typing-extensions = "^3.7.4"
 
 # I/O
-aiofiles = "^0.6.0"
+aiofiles = "^0.7.0"
 
 [tool.poetry.dev-dependencies]
 # Sort imports
