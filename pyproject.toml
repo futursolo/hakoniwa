@@ -19,7 +19,7 @@ hiyori = "^0.2.1"
 sketchbook = "^0.2.1"
 
 # Routing
-destination = "^1.2.1"
+destination = "^1.3.0"
 
 # Typing
 typing-extensions = "^3.7.4"
