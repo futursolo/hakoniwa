@@ -275,17 +275,14 @@ test = ["pytest (>=6.0.1,<7)", "pytest-benchmark (>=3.2.3,<4)", "flake8 (>=3.8.2
 
 [[package]]
 name = "magichttp"
-version = "1.1.1"
+version = "1.1.2"
 description = "An http stack for asyncio."
 category = "main"
 optional = false
-python-versions = ">=3.6.0"
+python-versions = ">=3.6.1,<4.0.0"
 
 [package.dependencies]
-magicdict = ">=1.0.6,<2"
-
-[package.extras]
-test = ["pytest (>=6.0.1,<7)", "flake8 (>=3.8.3,<4)", "mypy (>=0.782,<1)"]
+magicdict = ">=1.0.6,<2.0.0"
 
 [[package]]
 name = "mccabe"
@@ -430,7 +427,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "c18f6aa372f948415ba996dfa812f30b2ddd0b887a3f703ce5f3ab06805ee1d8"
+content-hash = "38218760a886be04a2b03f1c86cb98f80945266b743b42ed235f16b3c3c68802"
 
 [metadata.files]
 aiofiles = [
@@ -525,8 +522,8 @@ magicdict = [
     {file = "magicdict-1.0.6.tar.gz", hash = "sha256:75a9e47056a11a3fb6c13e352267a0dfa0707da7089a93af44e10e467a0a0ae6"},
 ]
 magichttp = [
-    {file = "magichttp-1.1.1-py3-none-any.whl", hash = "sha256:b6f542984dfb23e0901edfca8c86e1839c5604204108be986c70bf3108eab200"},
-    {file = "magichttp-1.1.1.tar.gz", hash = "sha256:b8e627a32ac6ebb830b4b81c727c59b326d18151b66ce3c0da0e9d10c16e5923"},
+    {file = "magichttp-1.1.2-py3-none-any.whl", hash = "sha256:70507d8988a38a4134cc3c203300adf04c5655b53dd06f8bc5206a532d274dbf"},
+    {file = "magichttp-1.1.2.tar.gz", hash = "sha256:9d33d2218f40ab0f95d90350ad2583f00d11d15ad8bfc40c1b574ed66127cd9b"},
 ]
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},

@@ -12,7 +12,7 @@ python = "^3.8"
 magicdict = "^1.0.6"
 
 # Http
-magichttp = "^1.1.1"
+magichttp = "^1.1.2"
 hiyori = "^0.2.1"
 
 # Templating Engine
