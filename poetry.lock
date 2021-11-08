@@ -251,7 +251,7 @@ aiodns = ["aiodns (>=2.0.0,<3.0.0)"]
 
 [[package]]
 name = "isort"
-version = "5.9.2"
+version = "5.10.0"
 description = "A Python utility / library to sort Python imports."
 category = "dev"
 optional = false
@@ -428,7 +428,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b45caf5fd29d7fdbbd540fe28a765139b4017a9e60435f21e1a33f23213a36ad"
+content-hash = "6fa3eea4af329c886de1c578f5948e44fc891d3f3b22f88d81a98d986e167313"
 
 [metadata.files]
 aiofiles = [
@@ -515,8 +515,8 @@ hiyori = [
     {file = "hiyori-0.2.1.tar.gz", hash = "sha256:b4d96ce124c662b8993e1688b1cdd6b5be2b2e6327367767396e555c7b04571f"},
 ]
 isort = [
-    {file = "isort-5.9.2-py3-none-any.whl", hash = "sha256:eed17b53c3e7912425579853d078a0832820f023191561fcee9d7cae424e0813"},
-    {file = "isort-5.9.2.tar.gz", hash = "sha256:f65ce5bd4cbc6abdfbe29afc2f0245538ab358c14590912df638033f157d555e"},
+    {file = "isort-5.10.0-py3-none-any.whl", hash = "sha256:1a18ccace2ed8910bd9458b74a3ecbafd7b2f581301b0ab65cfdd4338272d76f"},
+    {file = "isort-5.10.0.tar.gz", hash = "sha256:e52ff6d38012b131628cf0f26c51e7bd3a7c81592eefe3ac71411e692f1b9345"},
 ]
 magicdict = [
     {file = "magicdict-1.0.6-py3-none-any.whl", hash = "sha256:59705375e5485fc203dc1b79713ca5692088802ff61d9e1879dae75effc2457d"},
