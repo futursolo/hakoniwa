@@ -221,11 +221,11 @@ flake8 = ">3.0.0"
 
 [[package]]
 name = "flake8-variables-names"
-version = "0.0.4"
+version = "0.0.5"
 description = "A flake8 extension that helps to make more readable variables names"
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.7"
 
 [[package]]
 name = "hiyori"
@@ -433,7 +433,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "b88dd9a31b6b9fbbc0c15e80a57366ec71349c8df248fb116b2dfcbd81444618"
+content-hash = "b7ed11c50ea788ae97978e8f1473a8eb9d8630ad66ab39e8d61d1ba9afb3a931"
 
 [metadata.files]
 aiofiles = [
@@ -530,7 +530,8 @@ flake8-spellcheck = [
     {file = "flake8_spellcheck-0.24.0-py2.py3-none-any.whl", hash = "sha256:33d1727e4edb2b0cda3a78dee467d7bde53ff5a2a90056bc7d1764e0b060f331"},
 ]
 flake8-variables-names = [
-    {file = "flake8_variables_names-0.0.4.tar.gz", hash = "sha256:d6fa0571a807c72940b5773827c5760421ea6f8206595ff0a8ecfa01e42bf2cf"},
+    {file = "flake8_variables_names-0.0.5-py3-none-any.whl", hash = "sha256:e3277031696bbe10b5132b49938cde1d70fcae9561533b7bd7ab8e69cb27addb"},
+    {file = "flake8_variables_names-0.0.5.tar.gz", hash = "sha256:30133e14ee2300e13a60393a00f74d98110c76070ac67d1ab91606f02824a7e1"},
 ]
 hiyori = [
     {file = "hiyori-0.2.1-py3-none-any.whl", hash = "sha256:e4eb818c6a5b2fe973e55050b3fd5a007bb7933a83c729cb8f7a24039faf883e"},
