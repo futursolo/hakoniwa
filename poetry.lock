@@ -372,18 +372,17 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "sketchbook"
-version = "0.2.1"
+version = "0.3.0"
 description = "A template engine built for asyncio with async/await syntax support."
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8.0,<4.0.0"
 
 [package.extras]
-aiofiles = ["aiofiles (>=0.3.1,<1)"]
-curio = ["curio (>=0.7.0,<1)"]
-dev = ["sphinx (>=1.5.5,<2)", "sphinxcontrib-asyncio (>=0.2.0,<1)", "sphinx-rtd-theme (>=0.2.4,<3)", "mypy (>=0.620,<1)", "flake8 (>=3.5.0,<4)", "pytest (>=3.0.7,<4)", "aiofiles (>=0.3.1,<1)", "curio (>=0.7.0,<1)"]
-full = ["aiofiles (>=0.3.1,<1)", "curio (>=0.7.0,<1)"]
-test = ["pytest (>=3.0.7,<4)", "aiofiles (>=0.3.1,<1)", "curio (>=0.7.0,<1)"]
+curio = ["curio (>=1.5,<2.0)"]
+full = ["curio (>=1.5,<2.0)", "aiofiles (>=0.6,<0.8)"]
+docs = ["curio (>=1.5,<2.0)", "aiofiles (>=0.6,<0.8)", "sphinx (>=4.1,<5.0)", "sphinxcontrib-asyncio (>=0.3.0,<0.4.0)", "sphinx_rtd_theme (>=1.0,<2.0)", "sphinx-rtd-dark-mode (>=1.2.4,<2.0.0)"]
+aiofiles = ["aiofiles (>=0.6,<0.8)"]
 
 [[package]]
 name = "snowballstemmer"
@@ -433,7 +432,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ab3adc12fed79d3d36d5779668f8037ea4b8e71a1f4f6c5d3571893591b33cda"
+content-hash = "679ce5002b84d597cae9e9d4e03f87888e7f2835e2ac8e32bbe0f0f7018ad93c"
 
 [metadata.files]
 aiofiles = [
@@ -607,8 +606,8 @@ pyflakes = [
     {file = "pyflakes-2.3.1.tar.gz", hash = "sha256:f5bc8ecabc05bb9d291eb5203d6810b49040f6ff446a756326104746cc00c1db"},
 ]
 sketchbook = [
-    {file = "sketchbook-0.2.1-py3-none-any.whl", hash = "sha256:424423f476c6657a5e184e842f44e25ce108f9c85d3c7bf52f872ccfac744757"},
-    {file = "sketchbook-0.2.1.tar.gz", hash = "sha256:ba4aaa7f6eb1fd4224a98a7bee8fa15aad3729e7a2366c691b1501655245f811"},
+    {file = "sketchbook-0.3.0-py3-none-any.whl", hash = "sha256:55f08411d0daaa576d0d0bd441eb42d8901cd38216934a84415ac3a5d1a6feb6"},
+    {file = "sketchbook-0.3.0.tar.gz", hash = "sha256:eb1945a61d303c9dd7e50dabdd58bb8318fed78f12bf762a6e0429575838f145"},
 ]
 snowballstemmer = [
     {file = "snowballstemmer-2.1.0-py2.py3-none-any.whl", hash = "sha256:b51b447bea85f9968c13b650126a888aabd4cb4463fca868ec596826325dedc2"},
