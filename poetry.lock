@@ -210,11 +210,11 @@ flake8 = ">=3.7"
 
 [[package]]
 name = "flake8-spellcheck"
-version = "0.24.0"
+version = "0.28.0"
 description = "Spellcheck variables, comments and docstrings"
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.8"
 
 [package.dependencies]
 flake8 = ">3.0.0"
@@ -425,7 +425,7 @@ python-versions = ">=3.6"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "c25fed7858f1de052f704de4d362c0d329c496736237567d39921f7b3e17d5aa"
+content-hash = "0f27e41edf9a4967ba3b4652227c1a1c20851103eba17ec63eed84142fbff3ad"
 
 [metadata.files]
 aiofiles = [
@@ -518,8 +518,8 @@ flake8-simplify = [
     {file = "flake8_simplify-0.19.2.tar.gz", hash = "sha256:a30ef76bf1c0cb89a52a8a5cee37667688e61a66735e997c08d56cd002f9e3e9"},
 ]
 flake8-spellcheck = [
-    {file = "flake8-spellcheck-0.24.0.tar.gz", hash = "sha256:833c92222158b5dea74f858ccfb9f980b7c865fbd89cabc18447dadb07ec62e6"},
-    {file = "flake8_spellcheck-0.24.0-py2.py3-none-any.whl", hash = "sha256:33d1727e4edb2b0cda3a78dee467d7bde53ff5a2a90056bc7d1764e0b060f331"},
+    {file = "flake8-spellcheck-0.28.0.tar.gz", hash = "sha256:6fb79724f27097af0b4c678c7eaf731f0d87cf4c1eae7fbd7836c1c78d67e12c"},
+    {file = "flake8_spellcheck-0.28.0-py3-none-any.whl", hash = "sha256:a0a37164b9175819b143ce0f0a8d2475457af3f0d77cd8423b0daf204662ee72"},
 ]
 flake8-variables-names = [
     {file = "flake8_variables_names-0.0.5-py3-none-any.whl", hash = "sha256:e3277031696bbe10b5132b49938cde1d70fcae9561533b7bd7ab8e69cb27addb"},

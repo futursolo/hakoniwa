@@ -67,7 +67,7 @@ flake8-variables-names = "^0.0.5"
 flake8-simplify = "^0.19.2"
 
 # Dictionary
-flake8-spellcheck = "^0.24.0"
+flake8-spellcheck = "^0.28.0"
 
 [tool.black]
 line-length = 79
